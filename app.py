@@ -17,7 +17,10 @@ st.set_page_config(
 @st.cache_data
 def load_data():
     if os.path.exists("data/customer_churn_data.csv"):
-        return pd.read_csv("data/customer_churn_data.csv")
+        df = pd.read_csv("data/customer_churn_data.csv")
+        df['TotalCharges'] = pd.to_numeric(df['TotalCharges'], errors='coerce')
+        df['TotalCharges'] = df['TotalCharges'].fillna(0.0)
+        return df
     return None
 
 df = load_data()
